@@ -1,0 +1,33 @@
+{
+  "todos": [
+    {
+      "id": 1,
+      "text": "Buy 1 bottle of milk",
+      "done": false,
+      "createAt": "2022-11-27T20:53:37.662Z",
+      "userId": 1
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "text": "Cool !!!",
+      "createAt": "2022-11-27T20:53:37.662Z",
+      "todoId": 1
+    }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "username": "james",
+      "password": "james@2022",
+      "createAt": "2022-11-27T20:53:37.662Z"
+    },
+    {
+      "id": 2,
+      "username": "mobin",
+      "password": "mobin@2022",
+      "createdAt": 1669586484263
+    }
+  ]
+}
