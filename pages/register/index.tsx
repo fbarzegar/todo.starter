@@ -8,12 +8,12 @@ export default function Register() {
 
   return (
     <Box sx={{ width: "100%", py: 4, background: "#eeeeee", height: "100vh" }}>
-      <Card sx={{ width: "450px", height: "550px", mx: "auto" }}>
+      <Card sx={{ width: "450px", height: "500px", mx: "auto" }}>
         <Box
           sx={{
             width: "100%",
             height: "80px",
-            background: "#83cee0",
+            background: "#53a8b6",
             display: "flex",
             justifyContent: "space-between",
             mx: "auto",
@@ -26,12 +26,12 @@ export default function Register() {
           <Box></Box>
         </Box>
         <RegisterForm />
-        <Typography sx={{ color: "#000", textAlign: "center" }}>Did you already register?</Typography>
+        <Typography sx={{ color: "#000", textAlign: "center", mt: 3 }}>Did you already register?</Typography>
         <Typography
-          sx={{ color: "#83cee0", fontWeight: "600", textAlign: "center", my: 1, cursor: "pointer" }}
+          sx={{ color: "#53a8b6", fontWeight: "600", textAlign: "center", my: 1, cursor: "pointer" }}
           onClick={() => router.push("/login")}
         >
-          SignIn
+          Sign In
         </Typography>
       </Card>
     </Box>

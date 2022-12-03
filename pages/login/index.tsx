@@ -8,12 +8,12 @@ export default function Login() {
 
   return (
     <Box sx={{ width: "100%", py: 4, background: "#eeeeee", height: "100vh" }}>
-      <Card sx={{ width: "450px", height: "550px", mx: "auto" }}>
+      <Card sx={{ width: "450px", height: "500px", mx: "auto" }}>
         <Box
           sx={{
             width: "100%",
             height: "80px",
-            background: "#83cee0",
+            background: "#53a8b6",
             display: "flex",
             justifyContent: "space-between",
             mx: "auto",
@@ -26,9 +26,9 @@ export default function Login() {
           <Box></Box>
         </Box>
         <LoginForm />
-        <Typography sx={{ color: "#000", textAlign: "center" }}>Don't have an account?</Typography>
+        <Typography sx={{ color: "#000", textAlign: "center", mt: 2 }}>Don't have an account?</Typography>
         <Typography
-          sx={{ color: "#83cee0", fontWeight: "600", textAlign: "center", my: 1, cursor: "pointer" }}
+          sx={{ color: "#53a8b6", fontWeight: "600", textAlign: "center", my: 1, cursor: "pointer" }}
           onClick={() => router.push("/register")}
         >
           SignUp now
