@@ -12,7 +12,7 @@ export async function get<T>(path: string, config?: AxiosRequestConfig, withPagi
   };
 
   try {
-    const response = await apiAgent.get(path, config);
+    const response = await apiAgent.get<T>(path, config);
     return onSuccess(response);
   } catch (error) {
     return onError(error);
@@ -29,7 +29,7 @@ export async function post<T>(path: string, data: any, config?: AxiosRequestConf
   };
 
   try {
-    const response = await apiAgent.post(path, data, config);
+    const response = await apiAgent.post<T>(path, data, config);
     return onSuccess(response);
   } catch (error) {
     return onError(error);
@@ -54,7 +54,7 @@ export async function Put<T>(
   };
 
   try {
-    const response = await apiAgent.put(path, data, { headers, params });
+    const response = await apiAgent.put<T>(path, data, { headers, params });
     return onSuccess(response);
   } catch (error) {
     return onError(error);
@@ -76,7 +76,7 @@ export async function patch<T>(
   };
 
   try {
-    const response = await apiAgent.patch(path, data, { headers, params });
+    const response = await apiAgent.patch<T>(path, data, { headers, params });
     return onSuccess(response);
   } catch (error) {
     return onError(error);
@@ -93,7 +93,7 @@ export async function delete_<T>(path: string, params: AxiosRequestConfig["param
   };
 
   try {
-    const response = await apiAgent.delete(path, { params, data });
+    const response = await apiAgent.delete<T>(path, { params, data });
     return onSuccess(response);
   } catch (error) {
     return onError(error);

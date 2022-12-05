@@ -1,11 +1,11 @@
-import { Children } from "react";
+import { ReactNode } from "react";
 import Header from "../component/header/header";
 
-export default function DefaultLayout() {
+export default function DefaultLayout({ children }: { children: ReactNode }) {
   return (
     <>
       <Header />
-      {Children}
+      {children}
     </>
   );
 }

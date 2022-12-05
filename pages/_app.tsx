@@ -1,14 +1,35 @@
 import { CssBaseline } from "@mui/material";
 import type { AppProps } from "next/app";
-import DefaultLayout from "../layout/default";
+import { Provider } from "react-redux";
+
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+import { SWRConfig } from "swr";
+import { store } from "../store";
 
 export default function App({ Component, pageProps }: AppProps) {
-// const getLayout = Component.getLayout ?? ((page) => <DefaultLayout>{page}</DefaultLayout>)
+  // const getLayout = Component.getLayout ?? ((page) => <DefaultLayout>{page}</DefaultLayout>)
 
   return (
-    <>
-      <Component {...pageProps} />
-      <CssBaseline />
-    </>
+    <Provider store={store}>
+      <SWRConfig>
+        <ToastContainer
+          limit={1}
+          theme="colored"
+          position="bottom-left"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
+        <CssBaseline />
+        <Component {...pageProps} />
+      </SWRConfig>
+    </Provider>
   );
 }

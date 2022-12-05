@@ -1,6 +1,6 @@
 import { Action, AnyAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import Cookies from "js-cookie";
-import { tokenkey } from "../../api/token";
+import { setToken, tokenkey } from "../../api/token";
 import { getMe, login, register, userType } from "../../api/user";
 import { useAppSelector } from "./hooks";
 
@@ -74,7 +74,7 @@ const userSlice = createSlice({
     builder.addCase(loginThunk.fulfilled, (state, action) => {
       if (action.payload) {
         state.status = "Authorized";
-        Cookies.set(tokenkey, action.payload, { expires: 30 });
+        setToken(tokenkey);
         state.user = action.payload.user;
       } else {
         state.status === "unAuthorized";
@@ -87,7 +87,7 @@ const userSlice = createSlice({
     builder.addCase(registerThunk.fulfilled, (state, action) => {
       if (action.payload) {
         state.status = "Authorized";
-        Cookies.set(tokenkey, action.payload, { expires: 30 });
+        setToken(tokenkey);
         state.user = action.payload.user;
       } else {
         state.status === "unAuthorized";
@@ -100,7 +100,7 @@ const userSlice = createSlice({
     builder.addCase(getMeThunk.fulfilled, (state, action) => {
       if (action.payload) {
         state.status = "Authorized";
-        Cookies.set(tokenkey, action.payload, { expires: 30 });
+        setToken(tokenkey);
         state.user = action.payload;
       } else {
         state.status = "unAuthorized";
@@ -117,9 +117,12 @@ const userSlice = createSlice({
 
 export default userSlice.reducer;
 
+export const { logout } = userSlice.actions;
+
 export const selectUser = (state: any) => state.user;
 
 export const useUser = () => {
   const user = useAppSelector(selectUser);
+
   return user.user ? (user.user as userType) : null;
 };

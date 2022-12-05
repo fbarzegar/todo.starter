@@ -1,9 +1,14 @@
 import { useState } from "react";
-import { Button, TextField, Typography, Box, Input, OutlinedInput, InputAdornment, IconButton } from "@mui/material";
+import { Button, TextField, Typography, Box, OutlinedInput, InputAdornment, IconButton, Input } from "@mui/material";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import { Form, Formik, useFormik } from "formik";
+import { useRouter } from "next/router";
+import { unwrapResult } from "@reduxjs/toolkit";
+
+import { FormikHelpers, useFormik } from "formik";
 import * as Yup from "yup";
+import { useAppDispatch } from "../../features/user/hooks";
+import { loginThunk } from "../../features/user/userSlice";
 
 const schema = Yup.object().shape({
   username: Yup.string().required("please enter username"),
@@ -13,10 +18,28 @@ const schema = Yup.object().shape({
 export default function LoginForm() {
   const [show, setShow] = useState(false);
 
-  const handleSubmit = () => {};
+  const dispatch = useAppDispatch();
+  const router = useRouter();
 
-  const { values, errors, touched, isSubmitting, isValid, handleBlur, setFieldValue } = useFormik({
-    onSubmit: handleSubmit,
+  const handleFormSubmit = async (
+    data: { username: string; password: string },
+    { setSubmitting }: FormikHelpers<{ username: string; password: string }>
+  ) => {
+    console.log("12");
+    try {
+      setSubmitting(true);
+      const res = await dispatch(loginThunk({ username: data.username, password: data.password }));
+      unwrapResult(res);
+      router.push("/");
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  const { values, errors, touched, isSubmitting, isValid, handleBlur, handleSubmit, handleChange } = useFormik({
+    onSubmit: handleFormSubmit,
     validationSchema: schema,
     initialValues: { username: "", password: "" },
     enableReinitialize: true,
@@ -31,13 +54,15 @@ export default function LoginForm() {
             fullWidth
             name="username"
             type="name"
-            value={values.username}
+            value={values?.username}
+            onChange={handleChange("username")}
             error={Boolean(touched.username && errors.username)}
             helperText={errors.username}
-            onBlur={handleBlur}
           />
           <Typography sx={{ my: 1 }}>password</Typography>
-          <OutlinedInput
+          <Input
+            value={values?.password}
+            onChange={handleChange("password")}
             type={show ? "text" : "password"}
             fullWidth
             endAdornment={
@@ -50,9 +75,16 @@ export default function LoginForm() {
           />
         </Box>
         <Button
-          sx={{ width: "100%", my: 3, background: "#53a8b6", color: "#FFF", "&:hover": { background: "#53a8b6" } }}
+          sx={{
+            width: "100%",
+            my: 3,
+            background: "#53a8b6",
+            color: "#FFF",
+            "&:hover": { background: "#53a8b6" },
+            "&:disabled": { background: "#eeeeee", color: "#53a8b6" },
+          }}
           type="submit"
-          disabled={!isValid}
+          disabled={!isValid || isSubmitting}
         >
           Sing In
         </Button>
