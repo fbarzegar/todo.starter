@@ -36,7 +36,7 @@ export default function Header() {
             <>
               <Button>
                 <Avatar />
-                <Typography>{user.username}</Typography>
+                <Typography>{user?.username}</Typography>
               </Button>
               <Button sx={{ color: "#E33C25" }} onClick={() => setOpen(true)}>
                 logout

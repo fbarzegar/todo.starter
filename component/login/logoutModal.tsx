@@ -16,7 +16,7 @@ export default function LogoutModal({ open, handleClose }: { open: boolean; hand
 
   return (
     <Dialog dir="rtl" open={open} onClose={handleClose}>
-      <Box sx={{ width: phone ? "312px" : "400px", height: phone ? "180px" : "204px" }}>
+      <Box sx={{ width: phone ? "312px" : "400px", height: "auto", py: 2 }}>
         <Typography sx={{ fontSize: phone ? "16px" : "20px", textAlign: "center", mt: "10px", mb: "20px" }}>
           میخواهید از حساب کاربری خود خارج شوید؟
         </Typography>

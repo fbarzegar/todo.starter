@@ -8,7 +8,7 @@ import { unwrapResult } from "@reduxjs/toolkit";
 import { FormikHelpers, useFormik } from "formik";
 import * as Yup from "yup";
 import { useAppDispatch } from "../../features/user/hooks";
-import { loginThunk } from "../../features/user/userSlice";
+import { getMeThunk, loginThunk } from "../../features/user/userSlice";
 
 const schema = Yup.object().shape({
   username: Yup.string().required("please enter username"),
@@ -17,6 +17,7 @@ const schema = Yup.object().shape({
 
 export default function LoginForm() {
   const [show, setShow] = useState(false);
+  const [error, setError] = useState<string>();
 
   const dispatch = useAppDispatch();
   const router = useRouter();
@@ -30,8 +31,10 @@ export default function LoginForm() {
       setSubmitting(true);
       const res = await dispatch(loginThunk({ username: data.username, password: data.password }));
       unwrapResult(res);
+      await dispatch(getMeThunk());
       router.push("/");
-    } catch (error) {
+    } catch (error: any) {
+      setError("username or password incrrocet");
       console.log(error);
     } finally {
       setSubmitting(false);
@@ -88,6 +91,11 @@ export default function LoginForm() {
         >
           Sing In
         </Button>
+        {error && (
+          <Box sx={{ textAlign: "center" }}>
+            <Typography sx={{ color: "red" }}>{error}</Typography>
+          </Box>
+        )}
       </form>
     </Box>
   );

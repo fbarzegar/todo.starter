@@ -7,10 +7,10 @@ export default function Home() {
   const phone = useMediaQuery("(max-width:550px)");
   const router = useRouter();
   const user = useUser();
-  
+
   return (
     <>
-      {user ? (
+      {/* {user ? (
         <ToDoList />
       ) : (
         <Box
@@ -38,7 +38,8 @@ export default function Home() {
             login
           </Button>
         </Box>
-      )}
+      )} */}
+      <ToDoList />
     </>
   );
 }

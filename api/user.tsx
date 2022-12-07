@@ -14,7 +14,7 @@ export const register = (data: { username: string; password: string }) => {
   return post<{ message: string; token: any }>("/signup", data);
 };
 
-export const getMe = () => {
+export const getMe = async () => {
   return get("/me");
 };
 

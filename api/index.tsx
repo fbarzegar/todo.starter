@@ -36,7 +36,7 @@ export async function post<T>(path: string, data: any, config?: AxiosRequestConf
   }
 }
 
-export async function Put<T>(
+export async function put<T>(
   path: string,
   data: any,
   headers = {
@@ -63,9 +63,9 @@ export async function Put<T>(
 
 export async function patch<T>(
   path: string,
-  data: any,
+  data?: any,
   headers = { "Content-Type": "application/json", Authorization: `Bearer ${getToken()}` },
-  params: any
+  params?: any
 ) {
   const onSuccess = (response: AxiosResponse<T>) => {
     return (response.data as any)?.data;
@@ -83,7 +83,7 @@ export async function patch<T>(
   }
 }
 
-export async function delete_<T>(path: string, params: AxiosRequestConfig["params"] = null, data: any) {
+export async function delete_<T>(path: string, params: AxiosRequestConfig["params"] = null, data?: any) {
   const onSuccess = (response: AxiosResponse) => {
     return (response.data as any)?.data;
   };
