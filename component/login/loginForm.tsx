@@ -26,7 +26,6 @@ export default function LoginForm() {
     data: { username: string; password: string },
     { setSubmitting }: FormikHelpers<{ username: string; password: string }>
   ) => {
-    console.log("12");
     try {
       setSubmitting(true);
       const res = await dispatch(loginThunk({ username: data.username, password: data.password }));
