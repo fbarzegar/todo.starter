@@ -3,12 +3,10 @@ import { FormikHelpers, useFormik } from "formik";
 import * as Yup from "yup";
 
 import { toast } from "react-toastify";
-import { Close } from "@mui/icons-material";
 import { addComment } from "../../../api/comment";
 import { useUser } from "../../../features/user/userSlice";
 
 const schema = Yup.object().shape({
-  username: Yup.string().required(),
   text: Yup.string().required("please enter your opinion"),
 });
 
@@ -19,7 +17,7 @@ export default function AddComment() {
   const handleFormSubmit = async (data: { text: string }, { setSubmitting }: FormikHelpers<{ text: string }>) => {
     try {
       setSubmitting(true);
-      addComment({ text: data?.text });
+      await addComment({ text: data?.text });
     } catch (error) {
       toast.error("your comment not sent!");
       console.log(error);

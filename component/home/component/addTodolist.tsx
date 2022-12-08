@@ -2,6 +2,7 @@ import { Box, Button, TextField } from "@mui/material";
 import * as Yup from "yup";
 import { FormikHelpers, useFormik } from "formik";
 import { toast } from "react-toastify";
+
 import { addTodos } from "../../../api/todos";
 
 const schema = Yup.object({
@@ -12,7 +13,7 @@ export default function AddToDoList() {
   const handleFormSubmit = async (data: { text: string }, { setSubmitting }: FormikHelpers<{ text: string }>) => {
     try {
       setSubmitting(true);
-      addTodos({ text: data?.text });
+      await addTodos({ text: data?.text });
     } catch (error) {
       toast.error("invalid text");
       console.log(error);

@@ -1,6 +1,16 @@
 import { useState } from "react";
-import { Box, Button, Card, Checkbox, Divider, TextField, Typography, useMediaQuery } from "@mui/material";
-import { CheckBox, Comment, Edit } from "@mui/icons-material";
+import {
+  Box,
+  Button,
+  Card,
+  Checkbox,
+  Divider,
+  TextField,
+  Typography,
+  useMediaQuery,
+  FormControlLabel,
+} from "@mui/material";
+import { Edit } from "@mui/icons-material";
 import { useRouter } from "next/router";
 import useSWR from "swr";
 import * as Yup from "yup";
@@ -24,7 +34,7 @@ export default function ToDoList() {
   const phone = useMediaQuery("(max-width:550px)");
   const [open, setOpen] = useState(false);
   const [edit, setEdit] = useState(false);
-  const [checked, setChecked] = useState(false);
+  const [checked, setChecked] = useState(true);
 
   const router = useRouter();
   const { id } = router.query;
@@ -32,7 +42,7 @@ export default function ToDoList() {
   const handleFormSubmit = async (data: { text: string }, { setSubmitting }: FormikHelpers<{ text: string }>) => {
     try {
       setSubmitting(true);
-      // editTodos(id, { text: data?.text });
+      editTodos(id, { text: data?.text });
     } catch (error) {
       console.log(error);
     } finally {
@@ -40,17 +50,17 @@ export default function ToDoList() {
     }
   };
 
-  const handleDelete = async (data: { text: string }) => {
-    try {
-      if (checked) {
-        setChecked(true);
-      } else {
-        setChecked(false);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const handleDelete = async (data: { text: string }) => {
+  //   try {
+  //     if (checked) {
+  //       setChecked(true);
+  //     } else {
+  //       setChecked(false);
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   const { values, errors, touched, isSubmitting, isValid, handleSubmit, getFieldProps } = useFormik({
     onSubmit: handleFormSubmit,
@@ -81,20 +91,25 @@ export default function ToDoList() {
                           type="text"
                           {...getFieldProps("text")}
                           error={Boolean(touched.text || errors.text)}
+                          helperText={errors.text}
                           fullWidth
                         />
                       ) : (
                         <>
                           {checked ? (
-                            <Box>
-                              <Checkbox onClick={() => setChecked(true)} />
-                              <Typography sx={{ textDecoration: "line-through" }}>{i.text}</Typography>
-                            </Box>
+                            <FormControlLabel
+                              style={{ textDecoration: "line-through" }}
+                              control={<Checkbox />}
+                              label={i.text}
+                              onClick={() => setChecked(true)}
+                            />
                           ) : (
-                            <Box>
-                              <Checkbox onClick={() => setChecked(false)} />
-                              <Typography sx={{ textDecoration: "none" }}>{i.text}</Typography>
-                            </Box>
+                            <FormControlLabel
+                              style={{ textDecoration: "none" }}
+                              control={<Checkbox />}
+                              label={i.text}
+                              onClick={() => setChecked(false)}
+                            />
                           )}
                         </>
                       )}
@@ -107,6 +122,7 @@ export default function ToDoList() {
                           "&:hover": { background: "#53a8b6" },
                           "&:disabled": { background: "#eeeeee", color: "#53a8b6" },
                         }}
+                        onClick={() => handleFormSubmit}
                         type="submit"
                         disabled={isValid || isSubmitting}
                       >

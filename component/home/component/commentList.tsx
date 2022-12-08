@@ -7,7 +7,7 @@ import useSWR from "swr";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
-import { commentType, editComment } from "../../../api/comment";
+import { commentType, deleteComment, editComment } from "../../../api/comment";
 import AddComment from "./addComment";
 
 const item = [
@@ -24,6 +24,7 @@ export default function CommentList({ open, onClose }: { open: boolean; onClose:
   const { data: comment } = useSWR<{ comment: commentType[] }>(`/comments`);
 
   const [edit, setEdit] = useState(false);
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
   const { id } = router.query;
 
@@ -32,9 +33,19 @@ export default function CommentList({ open, onClose }: { open: boolean; onClose:
   const handleEdit = async (data: { text: string }) => {
     try {
       setEdit(true);
-      // editComment(id, { text: data.text });
+      editComment(id, { text: data.text });
     } catch (error) {
       setEdit(false);
+      console.log(error);
+    }
+  };
+
+  const handleDelete = async (data: { text: string }) => {
+    try {
+      setLoading(true);
+      deleteComment(id, { text: data.text });
+    } catch (error) {
+      setLoading(false);
       console.log(error);
     }
   };
@@ -72,7 +83,7 @@ export default function CommentList({ open, onClose }: { open: boolean; onClose:
                         <Edit />
                       </Button>
                     )}
-                    <Button>
+                    <Button type="submit" onClick={() => handleDelete}>
                       <Delete />
                     </Button>
                   </Box>
