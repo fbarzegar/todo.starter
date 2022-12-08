@@ -4,7 +4,7 @@ import { getMe, login, register, userType } from "../../api/user";
 import { useAppSelector } from "./hooks";
 
 export const loginThunk = createAsyncThunk(
-  "/loginThunk",
+  "userSlice/loginThunk",
   async (data: { username: string; password: string }, { rejectWithValue }) => {
     try {
       const res = await login(data);

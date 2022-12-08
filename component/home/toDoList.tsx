@@ -9,6 +9,7 @@ import { FormikHelpers, useFormik } from "formik";
 import { editTodos, todosType } from "../../api/todos";
 import AddToDoList from "./component/addTodolist";
 import CommentList from "./component/commentList";
+import { toast } from "react-toastify";
 
 const item = [
   { id: 1, text: "test1" },
@@ -31,10 +32,16 @@ export default function ToDoList() {
 
   const handleFormSubmit = async (data: { text: string }, { setSubmitting }: FormikHelpers<{ text: string }>) => {
     try {
+      if (!id) {
+        throw new Error("No id provided");
+      }
       setSubmitting(true);
-      // editTodos(id, { text: data?.text });
+      editTodos(id as string, { text: data?.text });
     } catch (error) {
       console.log(error);
+      if (error instanceof Error) {
+        toast.error(error.message);
+      }
     } finally {
       setSubmitting(false);
     }
