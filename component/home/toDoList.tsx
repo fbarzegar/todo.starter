@@ -98,17 +98,17 @@ export default function ToDoList() {
                         <>
                           {checked ? (
                             <FormControlLabel
-                              style={{ textDecoration: "line-through" }}
-                              control={<Checkbox />}
-                              label={i.text}
-                              onClick={() => setChecked(true)}
-                            />
-                          ) : (
-                            <FormControlLabel
                               style={{ textDecoration: "none" }}
                               control={<Checkbox />}
                               label={i.text}
                               onClick={() => setChecked(false)}
+                            />
+                          ) : (
+                            <FormControlLabel
+                              style={{ textDecoration: "line-through" }}
+                              control={<Checkbox />}
+                              label={i.text}
+                              onClick={() => setChecked(true)}
                             />
                           )}
                         </>
