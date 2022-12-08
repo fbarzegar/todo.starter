@@ -12,7 +12,7 @@ export const addTodos = (data?: any) => {
   return post(`/todos`, data);
 };
 
-export const editTodos = (id?: number | string, data?: any) => {
+export const editTodos = (id?: number | string, data?: todosType) => {
   return put(`/todos/${id}`, data);
 };
 

@@ -6,6 +6,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import { SWRConfig } from "swr";
+import { get } from "../api";
 import { store } from "../store";
 
 export default function App({ Component, pageProps }: AppProps) {
@@ -13,7 +14,7 @@ export default function App({ Component, pageProps }: AppProps) {
 
   return (
     <Provider store={store}>
-      <SWRConfig>
+      <SWRConfig value={{ fetcher: get, errorRetryCount: 3 }}>
         <ToastContainer
           limit={1}
           theme="colored"

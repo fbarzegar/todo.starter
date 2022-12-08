@@ -8,7 +8,7 @@ import { unwrapResult } from "@reduxjs/toolkit";
 import { FormikHelpers, useFormik } from "formik";
 import * as Yup from "yup";
 import { useAppDispatch } from "../../features/user/hooks";
-import { getMeThunk, loginThunk } from "../../features/user/userSlice";
+import { loginThunk } from "../../features/user/userSlice";
 
 const schema = Yup.object().shape({
   username: Yup.string().required("please enter username"),
@@ -26,12 +26,11 @@ export default function LoginForm() {
     data: { username: string; password: string },
     { setSubmitting }: FormikHelpers<{ username: string; password: string }>
   ) => {
-    console.log("12");
     try {
       setSubmitting(true);
       const res = await dispatch(loginThunk({ username: data.username, password: data.password }));
       unwrapResult(res);
-      await dispatch(getMeThunk());
+
       router.push("/");
     } catch (error: any) {
       setError("username or password incrrocet");

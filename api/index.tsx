@@ -4,7 +4,7 @@ import { getToken } from "./token";
 
 export async function get<T>(path: string, config?: AxiosRequestConfig, withPagination: Boolean = false) {
   const onSuccess = (response: AxiosResponse<T>) => {
-    return (response.data as any)?.data;
+    return response.data;
   };
 
   const onError = (error: any) => {
@@ -21,7 +21,7 @@ export async function get<T>(path: string, config?: AxiosRequestConfig, withPagi
 
 export async function post<T>(path: string, data: any, config?: AxiosRequestConfig) {
   const onSuccess = (response: AxiosResponse<T>) => {
-    return (response.data as any)?.data;
+    return response.data;
   };
 
   const onError = (error: any) => {

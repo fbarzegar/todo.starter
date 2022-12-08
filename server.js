@@ -21,16 +21,15 @@ server.post("/api/login", (req, res) => {
     if (!user) {
       throw new Error("User not found");
     }
-    console.log(req.headers.authorization);
+
     if (user.password === password) {
-      return res.status(200).json({ message: "done", user });
+      return res.status(200).json({ message: "done", user, token: user.id });
     } else {
       return res.status(401).json({
         message: "Username or Password incorrect",
       });
     }
   } catch (error) {
-    console.log({ error });
     return res.status(400).json({
       message: error.message,
     });
@@ -57,6 +56,7 @@ server.post("/api/signup", async (req, res) => {
     return res.status(200).json({
       message: "done",
       token: lastId + 1,
+      user: { id: lastId + 1, username, password, createdAt },
     });
   } catch (error) {
     return res.status(400).json({

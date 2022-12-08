@@ -2,18 +2,19 @@ import { useState } from "react";
 import { Close, Delete, Edit } from "@mui/icons-material";
 import { Box, Button, Dialog, Divider, TextField, Typography } from "@mui/material";
 import { useRouter } from "next/router";
+import { toast } from "react-toastify";
 
 import useSWR from "swr";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
-import { commentType, deleteComment, editComment } from "../../../api/comment";
+import { commentType, deleteComment, editComment } from "../../api/comment";
 import AddComment from "./addComment";
 
 const item = [
-  { id: 1, text: "import task" },
-  { id: 2, text: "import task" },
-  { id: 3, text: "import task" },
+  { id: 1, text: "important task" },
+  { id: 2, text: "important task" },
+  { id: 3, text: "important task" },
 ];
 
 const schema = Yup.object().shape({
@@ -32,9 +33,15 @@ export default function CommentList({ open, onClose }: { open: boolean; onClose:
 
   const handleEdit = async (data: { text: string }) => {
     try {
+      if (!id) {
+        throw new Error("No id provided");
+      }
       setEdit(true);
-      editComment(id, { text: data.text });
+      editComment(id as string, { text: data.text });
     } catch (error) {
+      if (error instanceof Error) {
+        toast.error(error.message);
+      }
       setEdit(false);
       console.log(error);
     }
@@ -43,7 +50,7 @@ export default function CommentList({ open, onClose }: { open: boolean; onClose:
   const handleDelete = async (data: { text: string }) => {
     try {
       setLoading(true);
-      deleteComment(id, { text: data.text });
+      deleteComment(id as string, { text: data.text });
     } catch (error) {
       setLoading(false);
       console.log(error);

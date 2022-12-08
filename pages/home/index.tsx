@@ -10,7 +10,7 @@ export default function Home() {
 
   return (
     <>
-      {/* {user ? (
+      {user ? (
         <ToDoList />
       ) : (
         <Box
@@ -38,8 +38,7 @@ export default function Home() {
             login
           </Button>
         </Box>
-      )} */}
-      <ToDoList />
+      )}
     </>
   );
 }

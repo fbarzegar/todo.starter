@@ -12,13 +12,15 @@ import {
 } from "@mui/material";
 import { Edit } from "@mui/icons-material";
 import { useRouter } from "next/router";
+import { toast } from "react-toastify";
+
 import useSWR from "swr";
 import * as Yup from "yup";
 import { FormikHelpers, useFormik } from "formik";
 
 import { editTodos, todosType } from "../../api/todos";
 import AddToDoList from "./component/addTodolist";
-import CommentList from "./component/commentList";
+import CommentList from "../comment/commentList";
 
 const item = [
   { id: 1, text: "test1" },
@@ -41,10 +43,16 @@ export default function ToDoList() {
 
   const handleFormSubmit = async (data: { text: string }, { setSubmitting }: FormikHelpers<{ text: string }>) => {
     try {
+      if (!id) {
+        throw new Error("No id provided");
+      }
       setSubmitting(true);
-      editTodos(id, { text: data?.text });
+      editTodos(id as string, { text: data?.text });
     } catch (error) {
       console.log(error);
+      if (error instanceof Error) {
+        toast.error(error.message);
+      }
     } finally {
       setSubmitting(false);
     }
@@ -114,7 +122,7 @@ export default function ToDoList() {
                         </>
                       )}
                     </Box>
-                    {edit ? (
+                    {/* {edit ? (
                       <Button
                         sx={{
                           background: "#53a8b6",
@@ -132,8 +140,8 @@ export default function ToDoList() {
                       <Button onClick={() => setEdit(true)}>
                         <Edit />
                       </Button>
-                    )}
-                    <Button onClick={() => setOpen(true)}>Comment </Button>
+                    )} */}
+                    <Button onClick={() => setOpen(true)}>detail </Button>
                   </Box>
                   <Divider />
                 </Box>

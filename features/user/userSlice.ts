@@ -1,10 +1,10 @@
 import { Action, AnyAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { removeToken, setToken, tokenkey } from "../../api/token";
+import { removeToken, setToken } from "../../api/token";
 import { getMe, login, register, userType } from "../../api/user";
 import { useAppSelector } from "./hooks";
 
 export const loginThunk = createAsyncThunk(
-  "/loginThunk",
+  "user/loginThunk",
   async (data: { username: string; password: string }, { rejectWithValue }) => {
     try {
       const res = await login(data);
@@ -16,7 +16,7 @@ export const loginThunk = createAsyncThunk(
 );
 
 export const registerThunk = createAsyncThunk(
-  "/registerThunk",
+  "user/registerThunk",
   async (data: { username: string; password: string }, { rejectWithValue }) => {
     try {
       return await register(data);
@@ -26,7 +26,7 @@ export const registerThunk = createAsyncThunk(
   }
 );
 
-export const getMeThunk = createAsyncThunk("/me", async () => {
+export const getMeThunk = createAsyncThunk("user/me", async () => {
   return await getMe();
 });
 
@@ -71,48 +71,43 @@ const userSlice = createSlice({
       state.status = "loading";
     });
     builder.addCase(loginThunk.fulfilled, (state, action) => {
-      // const token = action.payload.data?.token;
       if (action.payload) {
         state.status = "Authorized";
-        setToken(tokenkey);
+        setToken(String(action.payload.token));
         state.user = action.payload.user;
       } else {
-        state.status === "unAuthorized";
+        state.status = "unAuthorized";
       }
     });
     builder.addCase(loginThunk.rejected, (state, action) => {
-      state.status === "unAuthorized";
+      state.status = "unAuthorized";
       state.error = (action.payload as any).error;
     });
     builder.addCase(registerThunk.fulfilled, (state, action) => {
-      // const token = action.payload.data;
       if (action.payload) {
         state.status = "Authorized";
-        setToken(tokenkey);
+        setToken(String(action.payload.token));
         state.user = action.payload.user;
       } else {
-        state.status === "unAuthorized";
+        state.status = "unAuthorized";
       }
     });
     builder.addCase(registerThunk.rejected, (state, action) => {
-      state.status === "unAuthorized";
+      state.status = "unAuthorized";
       state.error = (action.payload as any).error;
     });
     builder.addCase(getMeThunk.fulfilled, (state, action) => {
-      // const token = action.payload.data?.token;
-      if (action.payload.token) {
+      if (action.payload) {
         state.status = "Authorized";
-        setToken(tokenkey);
-        state.user = action.payload?.me;
+        state.user = action.payload.user;
       } else {
         state.status = "unAuthorized";
-        state.error = action.payload.error;
       }
     });
 
     builder.addMatcher(isRejectedAction, (state, action) => {
-      state.status === "unAuthorized";
-      state.error === action.payload;
+      state.status = "unAuthorized";
+      state.error = action.payload;
     });
   },
 });

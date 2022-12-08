@@ -7,15 +7,15 @@ export type userType = {
 };
 
 export const login = (data: { username: string; password: string }) => {
-  return post<{ user: userType ,message:string }>("/login", data);
+  return post<{ user: userType; message: string; token: number }>("/login", data);
 };
 
 export const register = (data: { username: string; password: string }) => {
-  return post<{ message: string; token: any }>("/signup", data);
+  return post<{ message: string; token: number; user: userType }>("/signup", data);
 };
 
-export const getMe = async () => {
-  return get("/me");
+export const getMe = () => {
+  return get<{ user: userType }>("/me");
 };
 
 export const checkUsername = (username: string) => {

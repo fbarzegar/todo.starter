@@ -3,8 +3,9 @@ import { FormikHelpers, useFormik } from "formik";
 import * as Yup from "yup";
 
 import { toast } from "react-toastify";
-import { addComment } from "../../../api/comment";
-import { useUser } from "../../../features/user/userSlice";
+import { useUser } from "../../features/user/userSlice";
+import { addComment } from "../../api/comment";
+
 
 const schema = Yup.object().shape({
   text: Yup.string().required("please enter your opinion"),
