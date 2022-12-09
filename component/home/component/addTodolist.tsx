@@ -37,8 +37,7 @@ export default function AddToDoList() {
             style={{ width: "84%" }}
             value={values.text}
             onChange={handleChange("text")}
-            error={Boolean(touched.text || errors.text)}
-            helperText={errors.text}
+            error={Boolean(errors.text)}
           />
           <Button
             sx={{

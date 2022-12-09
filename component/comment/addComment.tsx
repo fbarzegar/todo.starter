@@ -1,11 +1,9 @@
-import { Box, Button, Dialog, TextField, Typography, useMediaQuery } from "@mui/material";
+import { Box, Button, TextField, Typography, useMediaQuery } from "@mui/material";
 import { FormikHelpers, useFormik } from "formik";
 import * as Yup from "yup";
 
 import { toast } from "react-toastify";
-import { useUser } from "../../features/user/userSlice";
 import { addComment } from "../../api/comment";
-
 
 const schema = Yup.object().shape({
   text: Yup.string().required("please enter your opinion"),
@@ -14,7 +12,6 @@ const schema = Yup.object().shape({
 export default function AddComment() {
   const phone = useMediaQuery("(max-width:550px)");
 
-  const user = useUser();
   const handleFormSubmit = async (data: { text: string }, { setSubmitting }: FormikHelpers<{ text: string }>) => {
     try {
       setSubmitting(true);

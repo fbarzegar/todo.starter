@@ -1,10 +1,10 @@
 import { delete_, get, post, put } from ".";
 
 export type commentType = {
-  id: number;
+  id:string | number;
   text: string;
   createAt: string;
-  todoId: number;
+  todoId: number | string;
 };
 
 export const addComment = (data?: any) => {
@@ -15,6 +15,6 @@ export const editComment = (id: number | string, data: { text: string }) => {
   return put(`/comments/${id}`, data);
 };
 
-export const deleteComment = (id: number | string, data: { text: string }) => {
+export const deleteComment = (id: number | string, data?: { text: string }) => {
   return delete_(`/comments/${id}`, data);
 };

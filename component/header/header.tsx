@@ -33,15 +33,15 @@ export default function Header() {
         >
           <Typography sx={{ mx: "30px", fontSize: "20px", fontWeight: "600" }}>ToDoList</Typography>
           {user ? (
-            <>
+            <Box sx={{ display: "flex", alignItems: "center" }}>
               <Button>
-                <Avatar />
-                <Typography>{user?.username}</Typography>
+                <Avatar style={{ width: "25px", height: "25px" }} />
+                <Typography sx={{ fontSize: "12px", mx: 1 }}>{user?.username}</Typography>
               </Button>
               <Button sx={{ color: "#E33C25" }} onClick={() => setOpen(true)}>
                 logout
               </Button>
-            </>
+            </Box>
           ) : (
             <Button sx={{ width: "150px" }} onClick={() => router.push("/login")}>
               SignIn / SignUp

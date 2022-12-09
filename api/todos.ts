@@ -16,6 +16,6 @@ export const editTodos = (id?: number | string, data?: todosType) => {
   return put(`/todos/${id}`, data);
 };
 
-export const deleteTodos = (id: number, data: todosType) => {
+export const deleteTodos = (id: string | number, data?: todosType) => {
   return delete_(`/todos/${id}`, data);
 };

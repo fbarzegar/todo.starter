@@ -2,6 +2,7 @@ import Axios from "axios";
 import { getToken, removeToken } from "./token";
 
 export const BaseUrl = "http://localhost:3000/api";
+export const webSocket = "http://localhost:3000/api";
 
 export const apiAgent = Axios.create({ baseURL: BaseUrl });
 
