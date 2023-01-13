@@ -1,6 +1,6 @@
 import { Button, TextField, Typography } from "@mui/material";
 import { useFormik } from "formik";
-import Head from "next/head";
+import { Head } from "next/document";
 import * as Yup from "yup";
 
 import AuthLayout from "../../layout/authLayout";
@@ -8,7 +8,7 @@ import { NextPageWithLayout } from "../../types/next";
 
 const schema = Yup.object().shape({});
 
-const Login: NextPageWithLayout = () => {
+const SignUp: NextPageWithLayout = () => {
   const { errors, getFieldProps, handleSubmit } = useFormik({
     enableReinitialize: true,
     validationSchema: schema,
@@ -19,7 +19,7 @@ const Login: NextPageWithLayout = () => {
   return (
     <>
       <Head>
-        <title>TodoList | Login</title>
+        <title>TodoList | SignUp</title>
       </Head>
       <form onSubmit={handleSubmit}>
         <Typography>username :</Typography>
@@ -36,17 +36,17 @@ const Login: NextPageWithLayout = () => {
             "&:hover": { background: "#90caf9" },
           }}
         >
-          login
+          create account
         </Button>
       </form>
     </>
   );
 };
 
-Login.getLayout = (p) => (
-  <AuthLayout title="login" button="Not signed up? Create an account" link="/sign-up">
+SignUp.getLayout = (p) => (
+  <AuthLayout title="SignUp" button="Already have an account? Sign In" link="/login">
     {p}
   </AuthLayout>
 );
 
-export default Login;
+export default SignUp;
