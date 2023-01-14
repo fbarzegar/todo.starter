@@ -1,1 +1,20 @@
-export type UserType = {};
+import { get, post } from ".";
+
+export type UserType = {
+  id: number;
+  username: string;
+  password: string;
+  createdAt: number | string;
+};
+
+export const register = (username: string, password: string) => {
+  return post<{ user: UserType; token: string }>("/signup", { username, password });
+};
+
+export const login = (username: string, password: string) => {
+  return post<{ user: UserType; token: string }>("/login", { username, password });
+};
+
+export const getMe = () => {
+  return get<UserType>("/me");
+};

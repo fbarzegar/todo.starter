@@ -16,7 +16,9 @@ export default function Header() {
           alignItems: "center",
         }}
       >
-        <Typography variant="h6">LOGO</Typography>
+        <Typography variant="h6" onClick={() => router.push("/")}>
+          LOGO
+        </Typography>
         <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-around" }}>
           <Typography sx={{ cursor: "pointer" }} mx={2}>
             home

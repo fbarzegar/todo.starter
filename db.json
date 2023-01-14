@@ -88,48 +88,7 @@
       "username": "barzegar",
       "password": "F@eze75",
       "createdAt": 1670168416853
-    },
-    {
-      "id": 4,
-      "username": "barzegar",
-      "password": "F@eze75",
-      "createdAt": 1670249720035
-    },
-    {
-      "id": 5,
-      "username": "barzegar",
-      "password": "F@eze75",
-      "createdAt": 1670255180098
-    },
-    {
-      "id": 6,
-      "username": "test",
-      "password": "test13",
-      "createdAt": 1670413685131
-    },
-    {
-      "id": 7,
-      "username": "aa",
-      "password": "aa12",
-      "createdAt": 1670414009514
-    },
-    {
-      "id": 8,
-      "username": "test",
-      "password": "test12",
-      "createdAt": 1670414035819
-    },
-    {
-      "id": 9,
-      "username": "test",
-      "password": "test12",
-      "createdAt": 1670414075739
-    },
-    {
-      "id": 10,
-      "username": "test",
-      "password": "test12",
-      "createdAt": 1670414105068
     }
+   
   ]
 }

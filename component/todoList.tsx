@@ -1,4 +1,5 @@
 import { Box, Button, Card, Typography, FormControlLabel, Checkbox } from "@mui/material";
+import { useRouter } from "next/router";
 
 const item = [
   { id: 1, title: "work" },
@@ -7,6 +8,8 @@ const item = [
 ];
 
 export default function TodoList() {
+  const router = useRouter();
+
   return (
     <>
       <Card sx={{ width: "70%", m: "20px auto" }}>
@@ -19,7 +22,7 @@ export default function TodoList() {
             return (
               <Box sx={{ width: "100%", display: "flex", justifyContent: "space-between" }} key={idx}>
                 <FormControlLabel style={{ textDecoration: "none" }} control={<Checkbox />} label={i.title} />
-                <Button>detail</Button>
+                <Button onClick={() => router.push("/detail/1")}>detail</Button>
               </Box>
             );
           })}
