@@ -1,8 +1,16 @@
 import { Delete, Edit } from "@mui/icons-material";
 import { Box, Card, IconButton, Typography } from "@mui/material";
 import Head from "next/head";
+import { useRouter } from "next/router";
+import useSWR from "swr";
+import { TodoType } from "../../api/todos";
 
 export default function Index() {
+  const router = useRouter();
+  const { id } = router.query;
+
+  const { data } = useSWR<TodoType>(`/todos/${id}`);
+
   return (
     <>
       <Head>
@@ -19,7 +27,7 @@ export default function Index() {
             alignItems: "center",
           }}
         >
-          <Typography>work</Typography>
+          <Typography>{data?.text}</Typography>
           <Box sx={{ display: "flex", justifyContent: "space-around" }}>
             <IconButton>
               <Delete />

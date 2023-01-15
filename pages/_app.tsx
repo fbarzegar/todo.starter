@@ -14,14 +14,24 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
   const getLayout = Component.getLayout ?? ((page) => <DefaultLayout>{page}</DefaultLayout>);
 
   return (
-    <>
-      <Provider store={store}>
-        <SWRConfig value={{ fetcher: get, errorRetryCount: 3 }}>
-          <ToastContainer />
-          <CssBaseline />
-          {getLayout(<Component {...pageProps} />)}
-        </SWRConfig>
-      </Provider>
-    </>
+    <Provider store={store}>
+      <SWRConfig value={{ fetcher: get, errorRetryCount: 3 }}>
+        <ToastContainer
+          limit={1}
+          theme="colored"
+          position="bottom-left"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
+        <CssBaseline />
+        {getLayout(<Component {...pageProps} />)}
+      </SWRConfig>
+    </Provider>
   );
 }

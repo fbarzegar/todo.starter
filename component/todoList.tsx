@@ -1,14 +1,11 @@
 import { Box, Button, Card, Typography, FormControlLabel, Checkbox } from "@mui/material";
 import { useRouter } from "next/router";
-
-const item = [
-  { id: 1, title: "work" },
-  { id: 2, title: "work" },
-  { id: 3, title: "work" },
-];
+import useSWR from "swr";
+import { TodoType } from "../api/todos";
 
 export default function TodoList() {
   const router = useRouter();
+  const { data } = useSWR<TodoType[]>("/todos");
 
   return (
     <>
@@ -18,11 +15,11 @@ export default function TodoList() {
         </Typography>
         <Button>add todoList</Button>
         <Box sx={{ width: "90%", mx: "auto" }}>
-          {item.map((i, idx) => {
+          {data?.map((i, idx) => {
             return (
-              <Box sx={{ width: "100%", display: "flex", justifyContent: "space-between" }} key={idx}>
-                <FormControlLabel style={{ textDecoration: "none" }} control={<Checkbox />} label={i.title} />
-                <Button onClick={() => router.push("/detail/1")}>detail</Button>
+              <Box sx={{ width: "100%", display: "flex", justifyContent: "space-between" }} key={i._id}>
+                <FormControlLabel style={{ textDecoration: "none" }} control={<Checkbox />} label={i.text} />
+                <Button onClick={() => router.push(`/todos/${i._id}`)}>detail</Button>
               </Box>
             );
           })}

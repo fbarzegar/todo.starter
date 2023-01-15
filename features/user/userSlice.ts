@@ -81,8 +81,8 @@ const userSlice = createSlice({
         state.status === "unauthorized";
       }
     });
-    builder.addCase(loginThunk.rejected, (state) => {
-      state.status === "unauthorized";
+    builder.addCase(registerThunk.rejected, (state) => {
+      state.status = "unauthorized";
     });
     builder.addCase(getMeThunk.pending, (state) => {
       state.status === "loading";
