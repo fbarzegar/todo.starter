@@ -20,7 +20,7 @@ export default function Index() {
           go to login page
         </Button>
       )} */}
-       <TodoList />
+      <TodoList />
     </>
   );
 }

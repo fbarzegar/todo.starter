@@ -8,11 +8,11 @@ export type UserType = {
 };
 
 export const register = (username: string, password: string) => {
-  return post<{ user: UserType; token: string }>("/signup", { username, password });
+  return post<{ user: UserType; token: number }>("/signup", { username, password });
 };
 
 export const login = (username: string, password: string) => {
-  return post<{ user: UserType; token: string }>("/login", { username, password });
+  return post<{ user: UserType; token: number }>("/login", { username, password });
 };
 
 export const getMe = () => {

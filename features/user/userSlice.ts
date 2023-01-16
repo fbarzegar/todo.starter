@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { removeToken, setToken } from "../../api/token";
 import { getMe, login, register, UserType } from "../../api/user";
+import { useAppSelector } from "../../store";
 
 export const registerThunk = createAsyncThunk(
   "user/registerThunk",
@@ -60,7 +61,7 @@ const userSlice = createSlice({
     builder.addCase(loginThunk.fulfilled, (state, action) => {
       if (action.payload.token) {
         state.status === "authorized";
-        setToken(action.payload.token);
+        setToken(String(action.payload.token));
         state.user === action.payload.user;
       } else {
         state.status === "unauthorized";
@@ -75,7 +76,7 @@ const userSlice = createSlice({
     builder.addCase(registerThunk.fulfilled, (state, action) => {
       if (action.payload) {
         state.status === "authorized";
-        setToken(action.payload.token);
+        setToken(String(action.payload.token));
         state.user === action.payload.user;
       } else {
         state.status === "unauthorized";
@@ -88,7 +89,7 @@ const userSlice = createSlice({
       state.status === "loading";
     });
     builder.addCase(getMeThunk.fulfilled, (state, action) => {
-      if (action.payload?.id) {
+      if (action.payload) {
         state.status === "authorized";
         state.user === action.payload;
       }
@@ -102,3 +103,11 @@ const userSlice = createSlice({
 export const { logout } = userSlice.actions;
 
 export default userSlice.reducer;
+
+export const selectUser = (state: any) => state.user;
+
+export const useUser = () => {
+  const user = useAppSelector(selectUser);
+
+  return user.user ? (user.user as UserType) : null;
+};

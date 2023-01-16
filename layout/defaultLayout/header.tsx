@@ -1,19 +1,19 @@
 import { Box, Button, CircularProgress, Typography } from "@mui/material";
 import { useRouter } from "next/router";
-import { useUser, useUserStatus } from "../../features/user/hooks";
+import { useUser } from "../../features/user/hooks";
 
 export default function Header() {
   const router = useRouter();
   const user = useUser();
-  const status = useUserStatus();
+  // const status = useUserStatus();
 
-  if (status === "loading") {
-    return (
-      <Box color="white" bgcolor="secondary.main" display="flex" alignItems="center" p={2}>
-        <CircularProgress />
-      </Box>
-    );
-  }
+  // if (status === "loading") {
+  //   return (
+  //     <Box color="white" bgcolor="secondary.main" display="flex" alignItems="center" p={2}>
+  //       <CircularProgress />
+  //     </Box>
+  //   );
+  // }
 
   return (
     <Box sx={{ width: "100%", height: "60px", alignItems: "center", background: "#EEEEEE" }}>
@@ -41,7 +41,10 @@ export default function Header() {
             blog
           </Typography>
           {user ? (
-            <Typography>{user?.username}</Typography>
+            <>
+              <Typography>{user?.username}</Typography>
+              <Button>logout</Button>
+            </>
           ) : (
             <Button sx={{ cursor: "pointer", mx: 2 }} onClick={() => router.push("/login")}>
               login/signup

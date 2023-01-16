@@ -1,60 +1,56 @@
-import { Delete, Edit } from "@mui/icons-material";
-import { Box, Card, IconButton, Typography } from "@mui/material";
-import Head from "next/head";
+import { useState } from "react";
 import { useRouter } from "next/router";
+import { Delete, Edit } from "@mui/icons-material";
+import { Card, Box, Typography, IconButton } from "@mui/material";
+import Comment from "../comment/[id]";
+import { deleteTodo, TodoType } from "../../api/todos";
 import useSWR from "swr";
-import { TodoType } from "../../api/todos";
+import EditTodoModal from "../../component/editModal";
+import DeleteModal from "../../component/deleteModal";
+import { toast } from "react-toastify";
 
-export default function Index() {
+export default function Todos() {
+  const [open, setOpen] = useState(false);
+  const [open1, setOpen1] = useState(false);
+
   const router = useRouter();
   const { id } = router.query;
 
-  const { data } = useSWR<TodoType>(`/todos/${id}`);
+  const { data: todo } = useSWR<TodoType>(id ? `/todos/${id}` : null);
+
+  const handleDelete = async () => {
+    try {
+      if (!id) {
+        throw new Error("No id provided");
+      }
+      await deleteTodo(id as string);
+      setOpen1(false);
+    } catch (error) {
+      console.log(error);
+      if (error instanceof Error) {
+        toast.error(error.message);
+      }
+    }
+  };
 
   return (
     <>
-      <Head>
-        <title>todoList | Detail </title>
-      </Head>
-      <Card sx={{ width: "70%", mx: "auto", my: 2 }}>
-        <Box
-          sx={{
-            widty: "90%",
-            mx: "auto",
-            display: "flex",
-            justifyContent: "space-between",
-            p: 2,
-            alignItems: "center",
-          }}
-        >
-          <Typography>{data?.text}</Typography>
+      <DeleteModal title={todo?.text} open={open1} onClose={() => setOpen1(false)} onConfirm={handleDelete} />
+      <EditTodoModal open={open} onClose={() => setOpen(false)} id={id as string} />
+      <Card sx={{ width: "70%", m: "20px auto", p: 1 }}>
+        <Box sx={{ width: "95%", mx: "auto", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+          <Typography>{todo?.text}</Typography>
           <Box sx={{ display: "flex", justifyContent: "space-around" }}>
-            <IconButton>
-              <Delete />
-            </IconButton>
-            <IconButton>
+            <IconButton onClick={() => setOpen(true)}>
               <Edit />
+            </IconButton>
+            <IconButton onClick={() => setOpen1(true)}>
+              <Delete />
             </IconButton>
           </Box>
         </Box>
       </Card>
-      <Card sx={{ width: "70%", mx: "auto", my: 2 }}>
-        <Typography variant="h6" textAlign="center" my={2}>
-          comment
-        </Typography>
-        <Box
-          sx={{
-            widty: "90%",
-            mx: "auto",
-            display: "flex",
-            justifyContent: "space-between",
-            p: 2,
-            alignItems: "center",
-          }}
-        >
-          <Typography>work</Typography>
-        </Box>
-      </Card>
+      <Comment />
     </>
   );
 }
